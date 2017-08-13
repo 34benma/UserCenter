@@ -79,4 +79,15 @@ public class UserBaseInfo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "UserBaseInfo{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", gender=" + gender +
+                ", lFrom=" + lFrom +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

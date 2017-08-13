@@ -39,9 +39,9 @@ public class UserCenterControllerTest extends BaseTest {
         mockMvc.perform(post("/usercenter/register")
                 .characterEncoding("UTF-8")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
                 .params(params))
-                .andExpect(status().isOk());
-
-
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
     }
 }
