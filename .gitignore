@@ -19,6 +19,6 @@ hs_err_pid*
 *.lst
 *.MF
 *.iml
-/target/*
+target/*
 .idea/*
 .DS_Store
