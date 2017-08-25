@@ -1,28 +1,16 @@
 package cn.wantedonline.usercenter.domain;
 
-import java.util.Date;
-
 /**
  * Created by wangcheng on 05/08/2017.
  * 用户注册基本信息实体 对应数据库userserinfo表
  */
 public class UserBaseInfo {
-    private long id;
     private String userName;
     private short gender;
     private String password;
     private String tel;
     private String email;
     private short lFrom; // 注册来源
-    private Date updateTime;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
@@ -72,22 +60,12 @@ public class UserBaseInfo {
         this.lFrom = lFrom;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
         return "UserBaseInfo{" +
-                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", gender=" + gender +
                 ", lFrom=" + lFrom +
-                ", updateTime=" + updateTime +
                 '}';
     }
 }

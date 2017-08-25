@@ -1,7 +1,30 @@
 package cn.wantedonline.usercenter.controller;
 
+import cn.wantedonline.common.base.BaseRtnObject;
+import cn.wantedonline.common.base.SystemConstant;
+import cn.wantedonline.usercenter.exception.InvalidParametersException;
+import cn.wantedonline.usercenter.exception.ServiceException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  * Created by wangcheng on 19/08/2017.
+ * Api异常处理器
  */
+@ControllerAdvice
 public class ApiExceptionHandler {
+
+    @ExceptionHandler(InvalidParametersException.class)
+    @ResponseBody
+    public BaseRtnObject handleInvalidParametersException(InvalidParametersException e) {
+
+        return BaseRtnObject.createRtnObject(SystemConstant.HTTP_INVALID_PARAMETER, e.getMessage());
+    }
+
+    @ExceptionHandler(ServiceException.class)
+    @ResponseBody
+    public BaseRtnObject handleServiceException(ServiceException e) {
+        return BaseRtnObject.createRtnObject(SystemConstant.HTTP_SERVER_EXCEPTION, e.getMessage());
+    }
 }
