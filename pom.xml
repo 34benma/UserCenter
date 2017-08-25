@@ -25,9 +25,36 @@
         <jaxb.version>2.2.12</jaxb.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <sharding-jdbc.version>1.5.1</sharding-jdbc.version>
+        <druid.version>1.1.2</druid.version>
+        <jdbc.version>5.1.41</jdbc.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.41</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.dangdang/sharding-jdbc-config-common -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-config-common</artifactId>
+                <version>${sharding-jdbc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.dangdang/sharding-jdbc-core -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>${sharding-jdbc.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -102,14 +129,20 @@
 
     <profiles>
         <profile>
-            <id>jdk18</id>
+            <id>dev_work</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <maven.compiler.source>1.8</maven.compiler.source>
-                <maven.compiler.target>1.8</maven.compiler.target>
-                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+                <mvn.compiler.source>1.8</mvn.compiler.source>
+                <mvn.compiler.target>1.8</mvn.compiler.target>
+                <mvn.compiler.compilerVersion>1.8</mvn.compiler.compilerVersion>
+                <mvn.sharding_01.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/us_01?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_01.jdbc.url>
+                <mvn.sharding_01.jdbc.username>root</mvn.sharding_01.jdbc.username>
+                <mvn.sharding_01.jdbc.pwd>123456</mvn.sharding_01.jdbc.pwd>
+                <mvn.sharding_02.jdbc.url><![CDATA[jdbc:mysql://172.20.16.134:3306/user0?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_02.jdbc.url>
+                <mvn.sharding_02.jdbc.username>root</mvn.sharding_02.jdbc.username>
+                <mvn.sharding_02.jdbc.pwd>123456</mvn.sharding_02.jdbc.pwd>
             </properties>
         </profile>
     </profiles>
