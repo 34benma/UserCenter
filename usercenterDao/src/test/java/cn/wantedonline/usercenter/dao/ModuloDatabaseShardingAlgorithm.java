@@ -1,4 +1,4 @@
-package cn.wantedline.usercenter.dao;
+package cn.wantedonline.usercenter.dao;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;

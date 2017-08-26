@@ -28,10 +28,23 @@
         <sharding-jdbc.version>1.5.1</sharding-jdbc.version>
         <druid.version>1.1.2</druid.version>
         <jdbc.version>5.1.41</jdbc.version>
+        <mybatis.version>3.4.5</mybatis.version>
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
         <hvalidator.version>5.4.1.Final</hvalidator.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -101,6 +114,11 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
@@ -138,20 +156,42 @@
         <profile>
             <id>dev_work</id>
             <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <mvn.compiler.source>1.8</mvn.compiler.source>
+                <mvn.compiler.target>1.8</mvn.compiler.target>
+                <mvn.compiler.compilerVersion>1.8</mvn.compiler.compilerVersion>
+                <mvn.sharding_0.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/us_01?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_0.jdbc.url>
+                <mvn.sharding_0.jdbc.username>root</mvn.sharding_0.jdbc.username>
+                <mvn.sharding_0.jdbc.pwd>123456</mvn.sharding_0.jdbc.pwd>
+                <mvn.sharding_1.jdbc.url><![CDATA[jdbc:mysql://172.20.16.134:3306/user0?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_1.jdbc.url>
+                <mvn.sharding_1.jdbc.username>root</mvn.sharding_1.jdbc.username>
+                <mvn.sharding_1.jdbc.pwd>123456</mvn.sharding_1.jdbc.pwd>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev_home</id>
+            <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <mvn.compiler.source>1.8</mvn.compiler.source>
                 <mvn.compiler.target>1.8</mvn.compiler.target>
                 <mvn.compiler.compilerVersion>1.8</mvn.compiler.compilerVersion>
-                <mvn.sharding_01.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/us_01?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_01.jdbc.url>
-                <mvn.sharding_01.jdbc.username>root</mvn.sharding_01.jdbc.username>
-                <mvn.sharding_01.jdbc.pwd>123456</mvn.sharding_01.jdbc.pwd>
-                <mvn.sharding_02.jdbc.url><![CDATA[jdbc:mysql://172.20.16.134:3306/user0?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_02.jdbc.url>
-                <mvn.sharding_02.jdbc.username>root</mvn.sharding_02.jdbc.username>
-                <mvn.sharding_02.jdbc.pwd>123456</mvn.sharding_02.jdbc.pwd>
+                <mvn.sharding_0.jdbc.url><![CDATA[jdbc:mysql://192.168.0.126:3306/user0?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_0.jdbc.url>
+                <mvn.sharding_0.jdbc.username>wangcheng</mvn.sharding_0.jdbc.username>
+                <mvn.sharding_0.jdbc.pwd>qazwsxTGB#@123</mvn.sharding_0.jdbc.pwd>
+
+                <mvn.sharding_1.jdbc.url><![CDATA[jdbc:mysql://192.168.0.126:3306/user1?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_1.jdbc.url>
+                <mvn.sharding_1.jdbc.username>wangcheng</mvn.sharding_1.jdbc.username>
+                <mvn.sharding_1.jdbc.pwd>qazwsxTGB#@123</mvn.sharding_1.jdbc.pwd>
+
+
             </properties>
         </profile>
+
     </profiles>
 
 

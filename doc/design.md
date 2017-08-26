@@ -32,13 +32,14 @@
 ```
 userinfo0 {
     id, bigint(20),
+    uid, bigint(20),
     username,varchar(50),
     gender,tinyint(2) comment '0 male 1 female'
     password,varchar(64),
     tel,varchar(12),
     email,varchar(32),
-    l_from,tinyint(2) comment '0 register, 1 QQ 2 wechat, 3 sina 4 github'
-   update_time,varchar(30)
+    l_from,tinyint(2) comment '0 register, 1 QQ 2 wechat, 3 sina 4 github',
+    update_time,varchar(30)
 }
 ```
 

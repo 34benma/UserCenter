@@ -1,4 +1,4 @@
-package cn.wantedline.usercenter.dao;
+package cn.wantedonline.usercenter.dao;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.dangdang.ddframe.rdb.sharding.api.ShardingDataSourceFactory;

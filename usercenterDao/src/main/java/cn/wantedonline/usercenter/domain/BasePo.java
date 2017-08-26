@@ -8,5 +8,28 @@ public class BasePo {
     private long id; //数据库主键 自增长id
     private long createTime; // 记录创建时间 unix时间戳 精确到毫秒 13位
     private long updateTime; // 记录最后一次更新时间 unix时间戳 精确到毫秒 13位
-    private short status; // 状态字段 0 OK 1 删除
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
 }
