@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -33,22 +34,24 @@ public class DataSourceConfig {
 
     private ShardingRule userInfoShardingRule;
 
+    public static DataSource userinfoDataSource;
+
     /**
      *
-     * @param type
+     * @param type TODO 并发场景下的如何做
      * @return 如果没有所指定的类型 则返回 null
      */
     public DataSource getShardingDataSource(ShardingDataSourceType type) {
-        DataSource dataSource = null;
         switch (type) {
             case USERINFO:
-                dataSource = ShardingDataSourceFactory.createDataSource(userInfoShardingRule);
-                break;
+                if (userinfoDataSource == null) {
+                    userinfoDataSource = ShardingDataSourceFactory.createDataSource(userInfoShardingRule);
+                }
+                return userinfoDataSource;
             default:
-                dataSource = null;
                 break;
         }
-        return dataSource;
+        return null;
     }
 
     @PostConstruct

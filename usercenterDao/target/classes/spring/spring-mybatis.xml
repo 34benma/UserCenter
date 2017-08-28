@@ -15,4 +15,17 @@
         <property name="mapperLocations" value="classpath*:/mapper/*.xml"/>
     </bean>
 
+    <rdb:strategy id="databaseShardingStrategy" sharding-columns="uid" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="uid" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>
+
+
+    <rdb:data-source id="shardingDataSource">
+        <rdb:sharding-rule data-sources="ds_0, ds_1">
+            <rdb:table-rules>
+                <rdb:table-rule logic-table="userinfo" actual-tables="userinfo${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
+                </rdb:table-rule>
+            </rdb:table-rules>
+        </rdb:sharding-rule>
+    </rdb:data-source>
+
 </beans>
