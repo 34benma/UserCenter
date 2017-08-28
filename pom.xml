@@ -17,6 +17,7 @@
         <module>usercenterFace</module>
     </modules>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.version>1.0</project.version>
         <spring.version>4.3.10.RELEASE</spring.version>
         <servlet.api.version>3.1.0</servlet.api.version>
@@ -122,6 +123,12 @@
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -162,10 +169,10 @@
                 <mvn.compiler.source>1.8</mvn.compiler.source>
                 <mvn.compiler.target>1.8</mvn.compiler.target>
                 <mvn.compiler.compilerVersion>1.8</mvn.compiler.compilerVersion>
-                <mvn.sharding_0.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/us_01?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_0.jdbc.url>
+                <mvn.sharding_0.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/user1?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_0.jdbc.url>
                 <mvn.sharding_0.jdbc.username>root</mvn.sharding_0.jdbc.username>
                 <mvn.sharding_0.jdbc.pwd>123456</mvn.sharding_0.jdbc.pwd>
-                <mvn.sharding_1.jdbc.url><![CDATA[jdbc:mysql://172.20.16.134:3306/user0?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_1.jdbc.url>
+                <mvn.sharding_1.jdbc.url><![CDATA[jdbc:mysql://192.168.17.15:3306/user2?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_1.jdbc.url>
                 <mvn.sharding_1.jdbc.username>root</mvn.sharding_1.jdbc.username>
                 <mvn.sharding_1.jdbc.pwd>123456</mvn.sharding_1.jdbc.pwd>
             </properties>
@@ -187,7 +194,6 @@
                 <mvn.sharding_1.jdbc.url><![CDATA[jdbc:mysql://192.168.0.126:3306/user1?allowMultiQueries=true&useUnicode=True&characterEncoding=utf-8]]></mvn.sharding_1.jdbc.url>
                 <mvn.sharding_1.jdbc.username>wangcheng</mvn.sharding_1.jdbc.username>
                 <mvn.sharding_1.jdbc.pwd>qazwsxTGB#@123</mvn.sharding_1.jdbc.pwd>
-
 
             </properties>
         </profile>

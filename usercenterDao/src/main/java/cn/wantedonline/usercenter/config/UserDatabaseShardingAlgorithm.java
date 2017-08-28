@@ -1,4 +1,4 @@
-package cn.wantedonline.usercenter.dao;
+package cn.wantedonline.usercenter.config;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;
@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 /**
  * Created by louiswang on 17/8/25.
  */
-public class ModuloDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer> {
+public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
