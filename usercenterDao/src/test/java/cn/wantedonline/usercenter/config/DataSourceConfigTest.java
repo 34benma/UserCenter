@@ -10,12 +10,10 @@ import javax.sql.DataSource;
  * Created by louiswang on 17/8/28.
  */
 public class DataSourceConfigTest extends BaseTest {
-    @Autowired
-    private DataSourceConfig dataSourceConfig;
 
     @Test
     public void testGetShardingDataSource() {
-        DataSource dataSource = dataSourceConfig.getShardingDataSource(ShardingDataSourceType.USERINFO);
+        DataSource dataSource = DataSourceConfig.userinfoDataSource;
         System.out.println("OK");
 
     }

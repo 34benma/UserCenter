@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 /**
@@ -22,13 +23,16 @@ public class RootConfig {
         return configurer;
     }
 
-    @Bean
+    @Bean(name = "sessionFactory")
     public SqlSessionFactoryBean getSqlSessionFactoryBean() {
         ResourceLoader loader = new DefaultResourceLoader();
+        Resource[] mapperResources = new Resource[1];
+        mapperResources[0] = loader.getResource("classpath:/mapper/UserInfoMapper.xml");
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(DataSourceConfig.userinfoDataSource);
         bean.setConfigLocation(loader.getResource("classpath:mybatis.xml"));
+        bean.setMapperLocations(mapperResources);
         return bean;
     }
 }

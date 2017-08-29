@@ -51,11 +51,6 @@
         </dependency>
         <dependency>
             <groupId>cn.wantedonline</groupId>
-            <artifactId>usercenterDao</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.wantedonline</groupId>
             <artifactId>usercenterService</artifactId>
             <version>${project.version}</version>
         </dependency>

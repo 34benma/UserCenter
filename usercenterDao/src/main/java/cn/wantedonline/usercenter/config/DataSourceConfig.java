@@ -36,30 +36,13 @@ public class DataSourceConfig {
 
     public static DataSource userinfoDataSource;
 
-    /**
-     *
-     * @param type TODO 并发场景下的如何做
-     * @return 如果没有所指定的类型 则返回 null
-     */
-    public DataSource getShardingDataSource(ShardingDataSourceType type) {
-        switch (type) {
-            case USERINFO:
-                if (userinfoDataSource == null) {
-                    userinfoDataSource = ShardingDataSourceFactory.createDataSource(userInfoShardingRule);
-                }
-                return userinfoDataSource;
-            default:
-                break;
-        }
-        return null;
-    }
-
     @PostConstruct
     private void init() {
         logger.info("===================begin init datasource======================");
         DataSourceRule dataSourceRule = buildDataSourceRule();
         List<TableRule> tableRules = buildTableRules(dataSourceRule);
         userInfoShardingRule = buildUserShardingRule(dataSourceRule, tableRules);
+        userinfoDataSource = ShardingDataSourceFactory.createDataSource(userInfoShardingRule);
         logger.info("===================finished init datasource====================");
     }
 
