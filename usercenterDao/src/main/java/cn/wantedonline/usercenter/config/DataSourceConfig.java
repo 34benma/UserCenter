@@ -1,5 +1,7 @@
 package cn.wantedonline.usercenter.config;
 
+import cn.wantedonline.common.utils.Iterables;
+import cn.wantedonline.usercenter.exception.DaoException;
 import com.dangdang.ddframe.rdb.sharding.api.ShardingDataSourceFactory;
 import com.dangdang.ddframe.rdb.sharding.api.rule.DataSourceRule;
 import com.dangdang.ddframe.rdb.sharding.api.rule.ShardingRule;
@@ -10,11 +12,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
@@ -23,21 +22,21 @@ import java.util.Map;
 /**
  * Created by wangcheng on 26/08/2017.
  */
-@Repository
 public class DataSourceConfig {
     private Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
 
-    @Resource(name = "sharding_0")
-    private DataSource sharding_0;
-    @Resource(name = "sharding_1")
-    private DataSource sharding_1;
-
     private ShardingRule userInfoShardingRule;
 
-    public static DataSource userinfoDataSource;
+    private List<DataSource> dataSources;
 
-    @PostConstruct
-    private void init() {
+    public DataSource userinfoDataSource;
+
+    public DataSourceConfig(List<DataSource> dataSources) throws DaoException {
+        this.dataSources = dataSources;
+        init();
+    }
+
+    private void init() throws DaoException {
         logger.info("===================begin init datasource======================");
         DataSourceRule dataSourceRule = buildDataSourceRule();
         List<TableRule> tableRules = buildTableRules(dataSourceRule);
@@ -50,10 +49,14 @@ public class DataSourceConfig {
      * 创建 数据源规则 后续新增数据源或修改数据源从这里修改
      * @return
      */
-    private DataSourceRule buildDataSourceRule() {
+    private DataSourceRule buildDataSourceRule() throws DaoException {
+
+        if (CollectionUtils.isEmpty(dataSources)) {
+            throw new DaoException("can't init sharding datasource, source dataSource is empty");
+        }
+
         Map<String, DataSource> dataSourceMap = Maps.newHashMap();
-        dataSourceMap.put("ds_0", sharding_0);
-        dataSourceMap.put("ds_1", sharding_1);
+        Iterables.forEach(dataSources, (index, datasource) -> dataSourceMap.put("ds_"+index, datasource));
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap);
         return dataSourceRule;
     }

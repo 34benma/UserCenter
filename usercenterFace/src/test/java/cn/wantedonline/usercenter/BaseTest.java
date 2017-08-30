@@ -1,6 +1,7 @@
 package cn.wantedonline.usercenter;
 
-import cn.wantedonline.usercenter.config.RootConfig;
+import cn.wantedonline.usercenter.config.DaoRootConfig;
+import cn.wantedonline.usercenter.config.FaceRootConfig;
 import cn.wantedonline.usercenter.config.WebConfig;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * Created by wangcheng on 12/08/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RootConfig.class, WebConfig.class})
+@ContextConfiguration(classes = {FaceRootConfig.class, WebConfig.class})
 @WebAppConfiguration
 public class BaseTest {
     @Test

@@ -1,5 +1,6 @@
 package cn.wantedonline.usercenter.config;
 
+import cn.wantedonline.usercenter.exception.DaoException;
 import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
@@ -16,7 +17,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -24,7 +27,7 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan(basePackages = {"cn.wantedonline.usercenter"})
-public class RootConfig {
+public class DaoRootConfig {
     private ResourceLoader defaultLoader = new DefaultResourceLoader();
 
     /**
@@ -39,6 +42,13 @@ public class RootConfig {
                 .getResources("classpath*:*.properties");
         configurer.setLocations(propertiesResources);
         return configurer;
+    }
+
+    @Bean
+    public DataSource getUserShardingDataSource() throws IOException, DaoException {
+        List<DataSource> druidDataSources = Lists.newArrayList(getSharding0DataSource(), getSharding1DataSource());
+        DataSourceConfig config = new DataSourceConfig(druidDataSources);
+        return config.userinfoDataSource;
     }
 
 
@@ -91,9 +101,9 @@ public class RootConfig {
     }
 
     @Bean(name = "sessionFactory")
-    public SqlSessionFactoryBean getSqlSessionFactoryBean() throws IOException {
+    public SqlSessionFactoryBean getSqlSessionFactoryBean() throws IOException, DaoException {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(DataSourceConfig.userinfoDataSource);
+        bean.setDataSource(getUserShardingDataSource());
         bean.setConfigLocation(defaultLoader.getResource("classpath:mybatis.xml"));
         Resource[] mapperResources = ResourcePatternUtils.getResourcePatternResolver(defaultLoader)
                 .getResources("classpath*:/mapper/*.xml");

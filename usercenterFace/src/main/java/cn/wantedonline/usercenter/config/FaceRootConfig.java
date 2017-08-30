@@ -11,5 +11,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackages = {"cn.wantedonline"},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)})
-public class RootConfig {
+public class FaceRootConfig extends ServiceRootConfig {
 }
