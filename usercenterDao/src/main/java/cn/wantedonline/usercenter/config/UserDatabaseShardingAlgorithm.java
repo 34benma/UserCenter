@@ -10,9 +10,9 @@ import java.util.LinkedHashSet;
 /**
  * Created by louiswang on 17/8/25.
  */
-public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer> {
+public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Long> {
     @Override
-    public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
+    public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Long> shardingValue) {
         for (String each : availableTargetNames) {
             if (each.endsWith((shardingValue.getValue()/10000 - 1) + "")) {
                 return each;
@@ -22,9 +22,9 @@ public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingA
     }
 
     @Override
-    public Collection<String> doInSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
+    public Collection<String> doInSharding(Collection<String> availableTargetNames, ShardingValue<Long> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
-        for (Integer value : shardingValue.getValues()) {
+        for (Long value : shardingValue.getValues()) {
             for (String tableName : availableTargetNames) {
                 if (tableName.endsWith((value/10000 - 1) + "")) {
                     result.add(tableName);
@@ -36,10 +36,10 @@ public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingA
 
     @Override
     public Collection<String> doBetweenSharding(Collection<String> availableTargetNames,
-                                                ShardingValue<Integer> shardingValue) {
+                                                ShardingValue<Long> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
-        Range<Integer> range = shardingValue.getValueRange();
-        for (Integer i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
+        Range<Long> range = shardingValue.getValueRange();
+        for (Long i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
             for (String each : availableTargetNames) {
                 if (each.endsWith((i/10000 - 1) + "")) {
                     result.add(each);

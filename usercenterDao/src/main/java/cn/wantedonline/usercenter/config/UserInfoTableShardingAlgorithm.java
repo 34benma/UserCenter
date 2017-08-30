@@ -10,9 +10,9 @@ import java.util.LinkedHashSet;
 /**
  * Created by louiswang on 17/8/25.
  */
-public class UserInfoTableShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
+public class UserInfoTableShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Long> {
 
-    public String doEqualSharding(final Collection<String> tableNames, final ShardingValue<Integer> shardingValue) {
+    public String doEqualSharding(final Collection<String> tableNames, final ShardingValue<Long> shardingValue) {
         for (String each : tableNames) {
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
                 return each;
@@ -21,9 +21,9 @@ public class UserInfoTableShardingAlgorithm implements SingleKeyTableShardingAlg
         throw new IllegalArgumentException();
     }
 
-    public Collection<String> doInSharding(final Collection<String> tableNames, final ShardingValue<Integer> shardingValue) {
+    public Collection<String> doInSharding(final Collection<String> tableNames, final ShardingValue<Long> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(tableNames.size());
-        for (Integer value : shardingValue.getValues()) {
+        for (Long value : shardingValue.getValues()) {
             for (String tableName : tableNames) {
                 if (tableName.endsWith(value % 2 + "")) {
                     result.add(tableName);
@@ -33,10 +33,10 @@ public class UserInfoTableShardingAlgorithm implements SingleKeyTableShardingAlg
         return result;
     }
 
-    public Collection<String> doBetweenSharding(final Collection<String> tableNames, final ShardingValue<Integer> shardingValue) {
+    public Collection<String> doBetweenSharding(final Collection<String> tableNames, final ShardingValue<Long> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(tableNames.size());
-        Range<Integer> range = shardingValue.getValueRange();
-        for (Integer i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
+        Range<Long> range = shardingValue.getValueRange();
+        for (Long i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
             for (String each : tableNames) {
                 if (each.endsWith(i % 2 + "")) {
                     result.add(each);

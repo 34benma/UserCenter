@@ -1,4 +1,4 @@
-package cn.wantedonline.usercenter;
+package cn.wnatedonline.usercenter;
 
 import cn.wantedonline.usercenter.config.RootConfig;
 import org.junit.Assert;
@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * Created by louiswang on 17/8/28.
+ * Created by wangcheng on 12/08/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})

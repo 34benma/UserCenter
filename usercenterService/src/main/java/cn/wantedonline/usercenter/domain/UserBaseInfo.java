@@ -5,12 +5,21 @@ package cn.wantedonline.usercenter.domain;
  * 用户注册基本信息实体 对应数据库userserinfo表
  */
 public class UserBaseInfo {
+    private String name;
     private String userName;
     private short gender;
     private String password;
     private String tel;
     private String email;
     private short lFrom; // 注册来源
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUserName() {
         return userName;

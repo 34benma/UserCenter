@@ -2,7 +2,6 @@ package cn.wantedonline.usercenter.config;
 
 import cn.wantedonline.usercenter.BaseTest;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 

@@ -13,6 +13,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>cn.wantedonline</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.wantedonline</groupId>
+            <artifactId>usercenterService</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
@@ -48,16 +58,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.wantedonline</groupId>
-            <artifactId>usercenterService</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.wantedonline</groupId>
-            <artifactId>Common</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

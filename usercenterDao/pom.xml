@@ -13,7 +13,11 @@
     <artifactId>usercenterDao</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>cn.wantedonline</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
