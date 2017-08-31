@@ -14,12 +14,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Service
 public class UserInfoService {
-    private Random random = new Random(System.currentTimeMillis());
+    @Autowired
+    private UserIdGenerator userIdGenerator;
 
     @Autowired
     private UserInfoMapper userInfoMapper;
-
-    private AtomicInteger start = new AtomicInteger(0);
 
     /**
      * 创建新用户 返回UserId
@@ -39,12 +38,12 @@ public class UserInfoService {
         po.setlFrom(userBaseInfo.getlFrom());
         po.setName(userBaseInfo.getName());
         po.setPassword(userBaseInfo.getPassword());
-        po.setSalt(random.nextInt(100000)+"");
+        po.setSalt("111");
         po.setTel(userBaseInfo.getTel());
         po.setUserName(userBaseInfo.getUserName());
         po.setCreateTime(System.currentTimeMillis()/1000);
         po.setUpdateTime(po.getCreateTime());
-        po.setUid(10000+start.incrementAndGet());
+        po.setUid(userIdGenerator.nextId());
         return po;
     }
 }

@@ -8,12 +8,12 @@ public class UserInfoPo extends BasePo {
     private long uid;
     private String userName;
     private String name;
-    private short gender;
+    private int gender;
     private String password;
     private String salt;
     private String tel;
     private String email;
-    private short lFrom; // 注册来源
+    private int lFrom; // 注册来源
 
     public long getUid() {
         return uid;
@@ -39,11 +39,11 @@ public class UserInfoPo extends BasePo {
         this.name = name;
     }
 
-    public short getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(short gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -79,11 +79,11 @@ public class UserInfoPo extends BasePo {
         this.email = email;
     }
 
-    public short getlFrom() {
+    public int getlFrom() {
         return lFrom;
     }
 
-    public void setlFrom(short lFrom) {
+    public void setlFrom(int lFrom) {
         this.lFrom = lFrom;
     }
 }
