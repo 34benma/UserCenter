@@ -14,7 +14,7 @@ public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingA
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Long> shardingValue) {
         for (String each : availableTargetNames) {
-            if (each.endsWith((shardingValue.getValue()/10000 - 1) + "")) {
+            if (each.endsWith(((shardingValue.getValue()>>1)%2) + "")) {
                 return each;
             }
         }
@@ -26,7 +26,7 @@ public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingA
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
         for (Long value : shardingValue.getValues()) {
             for (String tableName : availableTargetNames) {
-                if (tableName.endsWith((value/10000 - 1) + "")) {
+                if (tableName.endsWith(((shardingValue.getValue()>>1)%2) + "")) {
                     result.add(tableName);
                 }
             }
@@ -41,7 +41,7 @@ public class UserDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingA
         Range<Long> range = shardingValue.getValueRange();
         for (Long i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
             for (String each : availableTargetNames) {
-                if (each.endsWith((i/10000 - 1) + "")) {
+                if (each.endsWith(((shardingValue.getValue()>>1)%2) + "")) {
                     result.add(each);
                 }
             }
