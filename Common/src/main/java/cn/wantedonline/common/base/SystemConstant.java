@@ -2,7 +2,7 @@ package cn.wantedonline.common.base;
 
 /**
  * Created by wangcheng on 05/08/2017.
- * 系统常亮 所有模块和其他模块可以公用
+ * 系统常亮 所有模块可以公用
  * *************定义规范****************
  *
  * HTTP 开头 表示用于Controller层面的返回码定义
@@ -25,5 +25,11 @@ public class SystemConstant {
     //*******************CONS**************************************
     public static final int CONS_STATUS_OK = 0; //状态OK
     public static final int CONS_STATUS_DELETED = 1; //逻辑删除
+
+    //********************用户性别常量定义***************************
+    public static final int CONS_GENDER_MALE = 1;
+    public static final int CONS_GENDER_FEMAILE = 2;
+
+    private SystemConstant() {}
 
 }

@@ -7,11 +7,11 @@ package cn.wantedonline.usercenter.domain;
 public class UserBaseInfo {
     private String name;
     private String userName;
-    private short gender;
+    private int gender;
     private String password;
     private String tel;
     private String email;
-    private short lFrom; // 注册来源
+    private int lFrom; // 注册来源
 
     public String getName() {
         return name;
@@ -29,11 +29,11 @@ public class UserBaseInfo {
         this.userName = userName;
     }
 
-    public short getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(short gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -61,11 +61,11 @@ public class UserBaseInfo {
         this.email = email;
     }
 
-    public short getlFrom() {
+    public int getlFrom() {
         return lFrom;
     }
 
-    public void setlFrom(short lFrom) {
+    public void setlFrom(int lFrom) {
         this.lFrom = lFrom;
     }
 

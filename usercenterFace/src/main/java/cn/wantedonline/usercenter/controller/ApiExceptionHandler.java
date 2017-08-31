@@ -2,7 +2,6 @@ package cn.wantedonline.usercenter.controller;
 
 import cn.wantedonline.common.base.BaseRtnObject;
 import cn.wantedonline.common.base.SystemConstant;
-import cn.wantedonline.usercenter.exception.InvalidParametersException;
 import cn.wantedonline.usercenter.exception.ServiceException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(InvalidParametersException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
-    public BaseRtnObject handleInvalidParametersException(InvalidParametersException e) {
+    public BaseRtnObject handleIllegalArgumentException(IllegalArgumentException e) {
 
         return BaseRtnObject.createRtnObject(SystemConstant.HTTP_INVALID_PARAMETER, e.getMessage());
     }
