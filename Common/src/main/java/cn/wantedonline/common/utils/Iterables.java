@@ -13,8 +13,8 @@ public class Iterables {
         Objects.requireNonNull(action);
 
         int index = 0;
-        for (E elment : elements) {
-            action.accept(index++, elment);
+        for (E element : elements) {
+            action.accept(index++, element);
         }
     }
 }

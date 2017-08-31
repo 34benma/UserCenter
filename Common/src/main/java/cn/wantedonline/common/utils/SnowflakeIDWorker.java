@@ -10,10 +10,10 @@ public class SnowflakeIDWorker {
     private final static long twepoch = 1503158400000L; //固定的一个起始值 2017/08/20 00:00:00.000
     private long sequence = 0L; //每个毫秒值的起点
     private final static long workerIdBits = 4L; // 4 bit max=15
-    public final static long maxWorkerId = -1L ^ -1L << workerIdBits; //15
-    private final static long sequenceBits = 10L;
-    private final static long workerIdShift = sequenceBits;// 10bit
-    private final static long timestampLeftShift = sequenceBits + workerIdBits; //14bit
+    public final static long maxWorkerId = -1L ^ -1L << workerIdBits;
+    private final static long sequenceBits = 10L; //max
+    private final static long workerIdShift = sequenceBits;
+    private final static long timestampLeftShift = sequenceBits + workerIdBits;
     public final static long sequenceMask = -1L ^ -1L << sequenceBits;
     private long lastTimestamp = -1L;
 
@@ -52,9 +52,6 @@ public class SnowflakeIDWorker {
         this.lastTimestamp = timestamp;
         long nextId = ((timestamp - twepoch << timestampLeftShift))
                 | (this.workerId << this.workerIdShift) | (this.sequence);
-        System.out.println("timestamp:" + timestamp + ",timestampLeftShift:"
-                + timestampLeftShift + ",nextId:" + nextId + ",workerId:"
-                + workerId + ",sequence:" + sequence);
         return nextId;
     }
 
@@ -73,7 +70,9 @@ public class SnowflakeIDWorker {
 
     public static void main(String[] args){
         SnowflakeIDWorker worker2 = new SnowflakeIDWorker(2);
-        System.out.println(worker2.nextId());
+        for (int i = 0; i < 100; i++) {
+            System.out.println(worker2.nextId());
+        }
     }
 
 }
