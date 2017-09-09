@@ -17,8 +17,8 @@ public class UserInfoServiceTest extends BaseTest {
     public void testCreateNewUser() {
         UserBaseInfo baseInfo = new UserBaseInfo();
         baseInfo.setEmail("test@jumei.com");
-        baseInfo.setGender((short)1);
-        baseInfo.setlFrom((short)1);
+        baseInfo.setGender(1);
+        baseInfo.setlFrom(1);
         baseInfo.setName("test");
         baseInfo.setPassword("hellowthissipassworfsd");
         baseInfo.setUserName("testhaha");

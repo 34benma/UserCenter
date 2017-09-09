@@ -1,11 +1,15 @@
 package cn.wantedonline.usercenter.service;
 
+import cn.wantedonline.common.security.EncryptUtils;
 import cn.wantedonline.usercenter.dao.UserInfoMapper;
 import cn.wantedonline.usercenter.domain.UserBaseInfo;
 import cn.wantedonline.usercenter.domain.UserInfoPo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,6 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Service
 public class UserInfoService {
+    private Logger logger = LoggerFactory.getLogger(UserInfoService.class);
+
     @Autowired
     private UserIdGenerator userIdGenerator;
 
@@ -26,19 +32,26 @@ public class UserInfoService {
      * @return
      */
     public long createNewUser(UserBaseInfo userBaseInfo) {
-        UserInfoPo po = packUserBaseInfo(userBaseInfo);
-        userInfoMapper.insertNewUser(po);
+        try {
+            UserInfoPo po = packUserBaseInfo(userBaseInfo);
+            userInfoMapper.insertNewUser(po);
+            return po.getUid();
+        } catch (UnsupportedEncodingException e) {
+            logger.error("unsupported md5, can't encryp password... error info is {}", e.getMessage());
+        }
         return -1;
     }
 
-    private UserInfoPo packUserBaseInfo(UserBaseInfo userBaseInfo) {
+    private UserInfoPo packUserBaseInfo(UserBaseInfo userBaseInfo) throws UnsupportedEncodingException {
+        String salt = EncryptUtils.getRandomLong() + "";
+        String encrypedPwd = EncryptUtils.encoderByMD5(userBaseInfo.getPassword()+salt);
         UserInfoPo po = new UserInfoPo();
         po.setEmail(userBaseInfo.getEmail());
         po.setGender(userBaseInfo.getGender());
         po.setlFrom(userBaseInfo.getlFrom());
         po.setName(userBaseInfo.getName());
-        po.setPassword(userBaseInfo.getPassword());
-        po.setSalt("111");
+        po.setPassword(encrypedPwd);
+        po.setSalt(salt);
         po.setTel(userBaseInfo.getTel());
         po.setUserName(userBaseInfo.getUserName());
         po.setCreateTime(System.currentTimeMillis()/1000);
