@@ -3,6 +3,7 @@ package cn.wantedonline.usercenter.controller;
 import cn.wantedonline.common.base.BaseRtnObject;
 import cn.wantedonline.common.base.SystemConstant;
 import cn.wantedonline.common.utils.ParamsCheckUtils;
+import cn.wantedonline.usercenter.domain.UserInfo;
 import cn.wantedonline.usercenter.service.UserInfoService;
 import cn.wantedonline.usercenter.domain.UserBaseInfo;
 import org.slf4j.Logger;
@@ -55,7 +56,15 @@ public class UserCenterController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Object login(String username, String tel, String pwd) {
-
+        //===start parameter check
+        try {
+            Assert.hasLength(username, "UserName不能为空");
+        } catch (IllegalArgumentException e) {
+            Assert.hasLength(tel, "tel不能为空");
+        }
+        Assert.hasLength(pwd, "Password不能为空");
+        //===end parameter check
+        UserInfo userInfo = userInfoService.login(username, tel, pwd);
         return null;
     }
 }

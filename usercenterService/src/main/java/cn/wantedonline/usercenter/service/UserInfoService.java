@@ -3,6 +3,7 @@ package cn.wantedonline.usercenter.service;
 import cn.wantedonline.common.security.EncryptUtils;
 import cn.wantedonline.usercenter.dao.UserInfoMapper;
 import cn.wantedonline.usercenter.domain.UserBaseInfo;
+import cn.wantedonline.usercenter.domain.UserInfo;
 import cn.wantedonline.usercenter.domain.UserInfoPo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,22 +27,6 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    /**
-     * 创建新用户 返回UserId
-     * @param userBaseInfo
-     * @return
-     */
-    public long createNewUser(UserBaseInfo userBaseInfo) {
-        try {
-            UserInfoPo po = packUserBaseInfo(userBaseInfo);
-            userInfoMapper.insertNewUser(po);
-            return po.getUid();
-        } catch (UnsupportedEncodingException e) {
-            logger.error("unsupported md5, can't encryp password... error info is {}", e.getMessage());
-        }
-        return -1;
-    }
-
     private UserInfoPo packUserBaseInfo(UserBaseInfo userBaseInfo) throws UnsupportedEncodingException {
         String salt = EncryptUtils.getRandomLong() + "";
         String encrypedPwd = EncryptUtils.encoderByMD5(userBaseInfo.getPassword()+salt);
@@ -58,5 +43,32 @@ public class UserInfoService {
         po.setUpdateTime(po.getCreateTime());
         po.setUid(userIdGenerator.nextId());
         return po;
+    }
+
+    /**
+     * 创建新用户 返回UserId
+     * @param userBaseInfo
+     * @return
+     */
+    public long createNewUser(UserBaseInfo userBaseInfo) {
+        try {
+            UserInfoPo po = packUserBaseInfo(userBaseInfo);
+            userInfoMapper.insertNewUser(po);
+            return po.getUid();
+        } catch (UnsupportedEncodingException e) {
+            logger.error("unsupported md5, can't encryp password... error info is {}", e.getMessage());
+        }
+        return -1;
+    }
+
+    /**
+     * 用户登录 返回登录态
+     * @param username
+     * @param tel
+     * @param pwd
+     * @return
+     */
+    public UserInfo login(String username, String tel, String pwd) {
+        return null;
     }
 }
