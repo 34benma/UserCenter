@@ -32,9 +32,17 @@
         <mybatis.version>3.4.5</mybatis.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
         <hvalidator.version>5.4.1.Final</hvalidator.version>
+        <redis.version>2.9.0</redis.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
             <dependency>
                 <groupId>org.mybatis</groupId>

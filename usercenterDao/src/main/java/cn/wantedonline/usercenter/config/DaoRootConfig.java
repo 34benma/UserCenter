@@ -110,4 +110,13 @@ public class DaoRootConfig {
         bean.setMapperLocations(mapperResources);
         return bean;
     }
+
+    @Bean
+    public JedisHelper getJedisHelper() throws IOException {
+        Properties redisConfig = PropertiesLoaderUtils.loadProperties(
+                defaultLoader.getResource("classpath:conf.properties"));
+        String ip = redisConfig.getProperty("redis.ip", "127.0.0.1");
+        String port = redisConfig.getProperty("redis.port", "6379");
+        return new JedisHelper(ip, Integer.valueOf(port));
+    }
 }

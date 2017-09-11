@@ -44,4 +44,18 @@ public class UserCenterController {
 
         return BaseRtnObject.createRtnObject(SystemConstant.HTTP_OK, "OK", userId);
     }
+
+    /**
+     * 登录支持
+     * @param username username和
+     * @param tel
+     * @param pwd
+     * @return
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Object login(String username, String tel, String pwd) {
+
+        return null;
+    }
 }
