@@ -1,10 +1,12 @@
 package cn.wantedonline.usercenter.config;
 
 import cn.wantedonline.usercenter.exception.DaoException;
+import cn.wantedonline.usercenter.jedis.JedisTemplate;
 import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -16,6 +18,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.core.io.support.ResourcePatternUtils;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -111,12 +115,48 @@ public class DaoRootConfig {
         return bean;
     }
 
-    @Bean
-    public JedisHelper getJedisHelper() throws IOException {
+    @Bean(name = "jedisPool")
+    public JedisPool getJedisPool() throws IOException {
         Properties redisConfig = PropertiesLoaderUtils.loadProperties(
                 defaultLoader.getResource("classpath:conf.properties"));
-        String ip = redisConfig.getProperty("redis.ip", "127.0.0.1");
-        String port = redisConfig.getProperty("redis.port", "6379");
-        return new JedisHelper(ip, Integer.valueOf(port));
+        String host = redisConfig.getProperty("redis_ip");
+        int port = Integer.valueOf(redisConfig.getProperty("redis_port", "6379"));
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        //连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true
+        poolConfig.setBlockWhenExhausted(false);
+        //设置的逐出策略类名, 默认DefaultEvictionPolicy(当连接超过最大空闲时间,或连接数超过最大空闲连接数)
+        poolConfig.setEvictionPolicyClassName("org.apache.commons.pool2.impl.DefaultEvictionPolicy");
+        //是否启用pool的jmx管理功能, 默认true
+        poolConfig.setJmxEnabled(true);
+        poolConfig.setJmxNamePrefix("redis_pool");
+        //是否启用后进先出, 默认true
+        poolConfig.setLifo(true);
+        //最大空闲连接数, 默认8个
+        poolConfig.setMaxIdle(8);
+        //最大连接数, 默认8个
+        poolConfig.setMaxTotal(8);
+        //获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,  默认-1
+        poolConfig.setMaxWaitMillis(-1);
+        //逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
+        poolConfig.setMinEvictableIdleTimeMillis(1800000);
+        //最小空闲连接数, 默认0
+        poolConfig.setMinIdle(0);
+        //每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3
+        poolConfig.setNumTestsPerEvictionRun(3);
+        //对象空闲多久后逐出, 当空闲时间>该值 且 空闲连接>最大空闲数 时直接逐出,不再根据MinEvictableIdleTimeMillis判断  (默认逐出策略)
+        poolConfig.setSoftMinEvictableIdleTimeMillis(1800000);
+        //在获取连接的时候检查有效性, 默认false
+        poolConfig.setTestOnBorrow(false);
+        //在空闲时检查有效性, 默认false
+        poolConfig.setTestWhileIdle(false);
+        //逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
+        poolConfig.setTimeBetweenEvictionRunsMillis(-1);
+        JedisPool pool = new JedisPool(poolConfig, host, port);
+        return pool;
+    }
+
+    @Bean(name = "jedisTemplate")
+    public JedisTemplate getJedisTemplate() throws IOException {
+        return new JedisTemplate(getJedisPool());
     }
 }

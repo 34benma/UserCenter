@@ -21,5 +21,18 @@ public class ParamsCheckUtils {
         }
     }
 
+    /**
+     * 校验是否为 null
+     * @param o
+     * @return
+     */
+    public static boolean isNull(Object o) {
+        return o == null;
+    }
+
+    public static boolean isNotNull(Object o) {
+        return !isNull(o);
+    }
+
     private ParamsCheckUtils() {}
 }
