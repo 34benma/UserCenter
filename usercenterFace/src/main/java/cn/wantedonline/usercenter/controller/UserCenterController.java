@@ -48,7 +48,7 @@ public class UserCenterController {
 
     /**
      * 登录支持
-     * @param username username和
+     * @param username username和tel二者必须有一有值
      * @param tel
      * @param pwd
      * @return

@@ -1,6 +1,8 @@
 package cn.wantedonline.usercenter.service;
 
 import cn.wantedonline.common.security.EncryptUtils;
+import cn.wantedonline.common.utils.SnowflakeIDWorker;
+import cn.wantedonline.usercenter.dao.UserInfoCache;
 import cn.wantedonline.usercenter.dao.UserInfoMapper;
 import cn.wantedonline.usercenter.domain.UserBaseInfo;
 import cn.wantedonline.usercenter.domain.UserInfo;
@@ -27,6 +29,12 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
+    @Autowired
+    private UserInfoCache userInfoCache;
+
+    @Autowired
+    private SnowflakeIDWorker snowflakeIDWorker;
+
     private UserInfoPo packUserBaseInfo(UserBaseInfo userBaseInfo) throws UnsupportedEncodingException {
         String salt = EncryptUtils.getRandomLong() + "";
         String encrypedPwd = EncryptUtils.encoderByMD5(userBaseInfo.getPassword()+salt);
@@ -45,6 +53,13 @@ public class UserInfoService {
         return po;
     }
 
+    private UserInfo createUserSession(UserInfoPo userInfoPo) {
+        long loginTime = System.currentTimeMillis();
+        String sessionId = "sid_" + snowflakeIDWorker.nextId();
+        UserInfo userInfo = new UserInfo(sessionId, userInfoPo, loginTime);
+        return userInfo;
+    }
+
     /**
      * 创建新用户 返回UserId
      * @param userBaseInfo
@@ -52,8 +67,11 @@ public class UserInfoService {
      */
     public long createNewUser(UserBaseInfo userBaseInfo) {
         try {
+            //TODO: userName tel 重复性校验 单独成接口？
             UserInfoPo po = packUserBaseInfo(userBaseInfo);
             userInfoMapper.insertNewUser(po);
+            //插入session缓存 注册成功即可登录
+            userInfoCache.insertUserInfo(createUserSession(po));
             return po.getUid();
         } catch (UnsupportedEncodingException e) {
             logger.error("unsupported md5, can't encryp password... error info is {}", e.getMessage());
@@ -69,6 +87,7 @@ public class UserInfoService {
      * @return
      */
     public UserInfo login(String username, String tel, String pwd) {
+
         return null;
     }
 }

@@ -33,9 +33,16 @@
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
         <hvalidator.version>5.4.1.Final</hvalidator.version>
         <redis.version>2.9.0</redis.version>
+        <fastjson.version>1.2.38</fastjson.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>

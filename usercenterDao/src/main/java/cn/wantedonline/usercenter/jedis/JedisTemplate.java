@@ -64,22 +64,38 @@ public class JedisTemplate implements JedisCommands {
 
     @Override
     public String set(String key, String value) {
-        return null;
+        try(Jedis jedis = getJedis()) {
+            return jedis.set(key, value);
+        } catch (Exception ex) {
+            throw new JedisException(ex);
+        }
     }
 
     @Override
     public String set(String key, String value, String nxxx, String expx, long time) {
-        return null;
+        try(Jedis jedis = getJedis()) {
+            return jedis.set(key, value, nxxx, expx, time);
+        } catch (Exception ex) {
+            throw new JedisException(ex);
+        }
     }
 
     @Override
     public String set(String key, String value, String nxxx) {
-        return null;
+        try(Jedis jedis = getJedis()) {
+            return jedis.set(key, value, nxxx);
+        } catch (Exception ex) {
+            throw new JedisException(ex);
+        }
     }
 
     @Override
     public String get(String key) {
-        return null;
+        try(Jedis jedis = getJedis()) {
+            return jedis.get(key);
+        } catch (Exception ex) {
+            throw new JedisException(ex);
+        }
     }
 
     @Override

@@ -5,13 +5,15 @@ package cn.wantedonline.usercenter.domain;
  */
 public class UserInfo extends UserInfoPo {
     private String sessionId;
+    private long loginTime;
 
     public UserInfo() {
 
     }
 
-    public UserInfo(String sessionId, UserInfoPo userInfoPo) {
+    public UserInfo(String sessionId, UserInfoPo userInfoPo, long loginTime) {
         this.sessionId = sessionId;
+        this.loginTime = loginTime;
         this.setUid(userInfoPo.getUid());
         this.setUserName(userInfoPo.getUserName());
         this.setEmail(userInfoPo.getEmail());
@@ -26,5 +28,13 @@ public class UserInfo extends UserInfoPo {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public long getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(long loginTime) {
+        this.loginTime = loginTime;
     }
 }

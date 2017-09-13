@@ -1,12 +1,12 @@
 package cn.wantedonline.usercenter.config;
 
+import cn.wantedonline.common.utils.SnowflakeIDWorker;
 import cn.wantedonline.usercenter.exception.DaoException;
 import cn.wantedonline.usercenter.jedis.JedisTemplate;
 import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -158,5 +158,11 @@ public class DaoRootConfig {
     @Bean(name = "jedisTemplate")
     public JedisTemplate getJedisTemplate() throws IOException {
         return new JedisTemplate(getJedisPool());
+    }
+
+    @Bean(name = "snowflakeIDWorker")
+    public SnowflakeIDWorker getSnowflakeIDWorker() {
+        long workId = 1L;
+        return new SnowflakeIDWorker(workId);
     }
 }
